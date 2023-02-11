@@ -7,15 +7,23 @@ document.getElementById('food-inp').addEventListener('change', (e) => {
     getFoods(food);
 });
 
+// Using promises to get work done
 function getFoods(food)  {
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${food}`)
+    // fetching the Api and converting it into JSON format
+    
     .then(res => res.json())
+    // response gets converted into the JSON format
     .then(data => {
         dishes = [];
         data.meals.forEach(meal => dishes.push(meal));
         dishArea.innerHTML = '';
+        // making page empty 
         displayDishes();
+        // calling function
     })
+    
+    // Catching error if promise is not fullfilled in .catch and showing error
     .catch(()=>{
         cardList.innerHTML = `<p class="lead text-center">Sorry !!! No recipes found. Try searching for soething else</p>`
 
@@ -25,6 +33,7 @@ function getFoods(food)  {
 function displayDishes()  {
     let output = '';
     dishes.forEach(dish => {
+        // creating the desired output by using bootstrap 
         output+=`
             <div class="col-xl-3 col-sm-6 col-lg-4">
                 <div class="food-card" style="background: url('${dish.strMealThumb}');">
